@@ -179,3 +179,22 @@ front-end/economycraft/build.bat
 code/server-processes/src/charts/*
 code/server-processes/src/local.db-journal
 code/server-processes/src/local.db
+
+# Node.js dependencies
+node_modules/
+
+# Environment files (Crucial: keeps your passwords and keys safe)
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Optional: OS or Editor specific files (if not already handled)
+.DS_Store
+Thumbs.db
+.vscode/
