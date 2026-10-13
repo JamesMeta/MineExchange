@@ -4,14 +4,21 @@ import os
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 import supabase
-from mcrcon import MCRcon
+import socket
+import struct
+
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)
 
+load_dotenv()
+
 RCON_HOST = os.getenv("RCON_HOST")
 RCON_PORT = int(os.getenv("RCON_PORT", 25575))  
 RCON_PASSWORD = os.getenv("RCON_PASSWORD")
+
+
 
 @app.route('/')
 def home():
@@ -216,33 +223,68 @@ def withdraw(amount, user_id):
         return False
     pass
 
+def send_rcon_command(host, port, password, command):
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host, port))
+        
+        def send_net_packet(req_id, cmd_type, payload):
+            body = payload.encode('utf8') + b'\x00\x00'
+            length = len(body) + 8
+            packet = struct.pack('<ii', length, req_id) + struct.pack('<i', cmd_type) + body
+            s.sendall(packet)
+
+        def read_net_packet():
+            # RCON header consists of length (4 bytes), id (4 bytes), type (4 bytes) = 12 bytes total
+            raw_header = s.recv(12)
+            if len(raw_header) < 12:
+                return ""
+            length, req_id, cmd_type = struct.unpack('<iii', raw_header)
+            
+            # Read the payload body based on the packet length (length includes type(4) + id(4) + body + nulls)
+            body_length = length - 8
+            data = b""
+            while len(data) < body_length:
+                packet_chunk = s.recv(body_length - len(data))
+                if not packet_chunk:
+                    break
+                data += packet_chunk
+            
+            return data.decode('utf8', errors='ignore').rstrip('\x00')
+
+        # 1. Authenticate (Type 3)
+        send_net_packet(42, 3, password)
+        auth_resp = read_net_packet()
+
+        # 2. Execute Command (Type 2)
+        send_net_packet(42, 2, command)
+        response = read_net_packet()
+        return response
+
+
 @app.route('/api/minecraft-chat', methods=['POST'])
 def handle_chat():
     data = request.json
     username = data.get('username')
     message = data.get('message')
     
-    # Check if the message is a specific trigger, e.g., "!claim"
     if message.strip() == "!claim":
-        # --- 1. Query your cloud database here ---
-        # has_reward = db.check_reward(username)
+        # --- Database logic here ---
         has_reward = True # Simulated check
         
         if not has_reward:
             return jsonify({"success": False, "reply": f"Sorry {username}, no rewards found."})
         
-        # --- 2. Execute command via RCON ---
-        try:
-            with MCRcon(RCON_HOST, RCON_PASSWORD, port=RCON_PORT) as mcr:
-                mcr.command(f"give {username} diamond 1")
-                mcr.command(f"tellraw {username} [\"\"][\"Successfully claimed your reward!\"]")
-                
-            return jsonify({"success": True})
-        except Exception as e:
-            return jsonify({"success": False, "error": str(e)}), 500
+       # try:
+            # Send command using our socket helper instead of mcrcon
+        send_rcon_command(RCON_HOST, RCON_PORT, RCON_PASSWORD, f"give {username} diamond 1")
+        send_rcon_command(RCON_HOST, RCON_PORT, RCON_PASSWORD, f"tellraw {username} [\"\"][\"Successfully claimed your reward!\"]")
+            
+        return jsonify({"success": True})
+        
             
     return jsonify({"success": True, "ignored": True})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    print(RCON_HOST, RCON_PORT, RCON_PASSWORD)
+    app.run(host="127.0.0.1", port=5000, debug=False)
     CORS(app)
