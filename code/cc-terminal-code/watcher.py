@@ -14,37 +14,36 @@ if not LOG_FILE_PATH:
     raise ValueError("MINECRAFT_LOG_PATH is not set in your .env file!")
 
 def tail_log_file(file_path):
-    print(f"Starting Python log watcher, tracking: {file_path}")
+    print(f"Starting Python log watcher, tracking hooks: {file_path}")
     
     while not os.path.exists(file_path):
         print("Waiting for log file to appear...")
         time.sleep(2)
 
     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-        # Move to the end of the file so we only read new lines from now on
         f.seek(0, os.SEEK_END)
         
         while True:
             line = f.readline()
             if not line:
-                time.sleep(0.1)  # Sleep briefly if no new line is available
+                time.sleep(0.1)
                 continue
             
             process_log_line(line.strip())
 
 def process_log_line(line):
-    # Regex to match NeoForge/Minecraft chat lines: [HH:MM:SS] [Server thread/INFO]: <Username> Message
-    chat_regex = r"\]: <([a-zA-Z0-9_]{3,16})> (.+)$"
-    match = re.search(chat_regex, line)
+    # Regex to match our custom KubeJS log hook format
+    # Example: [10:45:18] [Server thread/INFO]: MINECRAFT_WEB_HOOK:CyanidicRapterV3:!withdraw 500
+    hook_regex = r"MINECRAFT_WEB_HOOK:([a-zA-Z0-9_]{3,16}):(.+)$"
+    match = re.search(hook_regex, line)
 
     if match:
         username = match.group(1)
         message = match.group(2)
 
-        print(f"[Chat Detected] {username}: {message}")
+        print(f"[Command Triggered] {username}: {message}")
 
         try:
-            # Send the chat event to your Flask backend
             response = requests.post(FLASK_API_URL, json={
                 "username": username,
                 "message": message
