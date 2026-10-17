@@ -1,0 +1,6 @@
+requests
+python-dotenv
+Flask
+Flask-Cors
+supabase
+mcrcon
