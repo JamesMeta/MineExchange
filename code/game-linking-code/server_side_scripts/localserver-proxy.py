@@ -2,12 +2,19 @@
 from calendar import c
 
 import re
+import sys
+import os
 
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 
 
-from server_side_scripts.local_server_utility import *
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if parent_dir not in sys.path:
+    sys.path.insert(0, parent_dir)
+
+
+from modules.utility.local_server_utility import *
 
 from dotenv import load_dotenv
 
@@ -49,7 +56,11 @@ def handle_chat():
     (re.compile(r'^!deop\s+self$'), handle_deop_self),
     (re.compile(r'^!spawn$'), handle_spawn),
     (re.compile(r'^!withdraw\s+([1-9][0-9]{0,3}|640000)$'), handle_withdraw),
-    (re.compile(r'^!inventory\s+claim\s+([a-zA-Z0-9_.-]+):([a-zA-Z0-9_.-]+)(?:\s+([1-9][0-9]{0,3}|6400))?$'), handle_inventory_claim)
+    (re.compile(r'^!inventory\s+claim\s+([a-zA-Z0-9_.-]+):([a-zA-Z0-9_.-]+)(?:\s+([1-9][0-9]{0,3}|6400))?$'), handle_inventory_claim),
+    (re.compile(r'^!inventory\s+deposit\s+([a-zA-Z0-9_.-]+):([a-zA-Z0-9_.-]+)(?:\s+(-?[1-9][0-9]{0,3}|-?6400|0))?$' ), handle_inventory_deposit),
+    (re.compile(r'^!inventory\s+list$'), handle_inventory_list),
+    (re.compile(r'^!home\s+go$'), handle_home_go),
+    (re.compile(r'^!home\s+set$'), handle_home_set),
     ]
     
     # Ignore empty messages or non-commands
@@ -61,7 +72,7 @@ def handle_chat():
         match = pattern.match(player_message)
         if match:
             # Pass captured regex groups (if any) directly to the handler
-            handler(username, match.groups())
+            handler(username, match.groups(), data)
             return jsonify({'success': True})
     
     # Fallback if command starts with '!' but matches nothing
