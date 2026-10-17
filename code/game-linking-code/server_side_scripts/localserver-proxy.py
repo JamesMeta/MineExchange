@@ -7,7 +7,7 @@ from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
 
 
-from local_server_utility import *
+from server_side_scripts.local_server_utility import *
 
 from dotenv import load_dotenv
 
