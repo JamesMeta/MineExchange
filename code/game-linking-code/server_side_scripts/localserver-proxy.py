@@ -61,6 +61,7 @@ def handle_chat():
     (re.compile(r'^!inventory\s+list$'), handle_inventory_list),
     (re.compile(r'^!home\s+go$'), handle_home_go),
     (re.compile(r'^!home\s+set$'), handle_home_set),
+    (re.compile(r'^!player_join$'), handle_player_join),
     ]
     
     # Ignore empty messages or non-commands

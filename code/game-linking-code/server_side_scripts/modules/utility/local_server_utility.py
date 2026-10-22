@@ -306,3 +306,20 @@ def handle_home_set(username, _matches, data):
             notify_player(username, f"Home set at ({x}, {y}, {z})!")
         except Exception as e:
             notify_player(username, f"Failed to set home: {str(e)}")
+
+def handle_player_join(username, _matches, data):
+    
+    supabase_client = supabase.create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+    
+    for i in range(200):
+        response = supabase_client.table("users").select("account_setup_complete").eq("minecraft_username", username).execute()
+        
+        if response.data:
+            complete = response.data[0]["account_setup_complete"]
+            
+            if complete:
+                break
+            
+        handle_spawn(username, None, None)
+        notify_player(username, "In order to play on this server you must verify your account on MineExchange: To reach MineExchange type /me or go to https://mineexchange.vercel.app in any desktop browser")
+        time.sleep(5)
