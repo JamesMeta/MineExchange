@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/share.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

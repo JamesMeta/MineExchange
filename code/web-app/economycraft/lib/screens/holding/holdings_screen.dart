@@ -1,5 +1,5 @@
-import 'package:economycraft/classes/company.dart';
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/share.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

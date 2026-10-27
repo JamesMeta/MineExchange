@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/order.dart';
+import 'package:economycraft/classes/modals/order.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:economycraft/screens/order/user/widgets/order_details_dialog.dart';
 import 'package:economycraft/screens/order/user/widgets/user_order_card.dart';

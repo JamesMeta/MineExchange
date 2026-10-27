@@ -76,6 +76,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/diamond.png
     - assets/images/bisrope.png
+    - assets/images/illager_symbol.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

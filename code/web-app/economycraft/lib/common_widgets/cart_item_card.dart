@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:economycraft/classes/product.dart';
+import 'package:economycraft/classes/modals/product.dart';
 
 class CartItemCard extends StatelessWidget {
   final Product product;

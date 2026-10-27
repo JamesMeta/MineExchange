@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/company.dart';
+import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/classes/company_info.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:economycraft/screens/stock_market/widgets/company_data_analytics_widget.dart';

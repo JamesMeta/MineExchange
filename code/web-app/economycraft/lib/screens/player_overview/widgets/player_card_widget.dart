@@ -1,5 +1,5 @@
 import 'package:economycraft/classes/pie_chart_data.dart';
-import 'package:economycraft/classes/player.dart';
+import 'package:economycraft/classes/modals/player.dart';
 import 'package:economycraft/common_widgets/linegraph_1_widget.dart';
 import 'package:economycraft/common_widgets/pie_chart_1_widget.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';

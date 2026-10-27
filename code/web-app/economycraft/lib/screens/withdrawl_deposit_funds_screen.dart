@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/player.dart';
+import 'package:economycraft/classes/modals/player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';

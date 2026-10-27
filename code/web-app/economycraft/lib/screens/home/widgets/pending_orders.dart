@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/order.dart';
+import 'package:economycraft/classes/modals/order.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:economycraft/screens/home/widgets/build_empty_state.dart';
 import 'package:economycraft/screens/home/widgets/build_section_card.dart';

@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/share.dart';
 
 class ShareChanges {
   final Share share;

@@ -38,6 +38,11 @@ class _BuildSideNavigationState extends State<BuildSideNavigation> {
         'route': '/home/holdings',
       },
       {
+        'title': 'Illager Loans',
+        'icon': Icons.local_atm_rounded,
+        'route': '/home/loans',
+      },
+      {
         'title': 'Funds',
         'icon': Icons.account_balance_wallet,
         'route': '/home/withdrawl_deposit_funds',

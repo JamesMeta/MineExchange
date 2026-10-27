@@ -1,7 +1,7 @@
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
-import 'package:economycraft/classes/player.dart';
+import 'package:economycraft/classes/modals/player.dart';
 
 class SupabasePlayer {
   static final _client = Supabase.instance.client;

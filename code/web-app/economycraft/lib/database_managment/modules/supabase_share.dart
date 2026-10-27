@@ -2,11 +2,11 @@ import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
 import 'package:economycraft/classes/price_vs_time.dart';
-import 'package:economycraft/classes/share.dart';
-import 'package:economycraft/classes/company.dart';
-import 'package:economycraft/classes/buy_order.dart';
-import 'package:economycraft/classes/company_share.dart';
-import 'package:economycraft/classes/player.dart';
+import 'package:economycraft/classes/modals/share.dart';
+import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/buy_order.dart';
+import 'package:economycraft/classes/modals/company_share.dart';
+import 'package:economycraft/classes/modals/player.dart';
 
 class SupabaseShare {
   static final _client = Supabase.instance.client;

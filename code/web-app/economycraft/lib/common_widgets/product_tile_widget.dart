@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:economycraft/classes/product.dart';
+import 'package:economycraft/classes/modals/product.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:intl/intl.dart';
 

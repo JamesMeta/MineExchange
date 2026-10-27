@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/buy_order.dart';
+import 'package:economycraft/classes/modals/buy_order.dart';
 import 'package:economycraft/classes/company_info.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:flutter/material.dart';

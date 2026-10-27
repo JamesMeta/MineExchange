@@ -1,10 +1,10 @@
-import 'package:economycraft/classes/company.dart';
-import 'package:economycraft/classes/company_share.dart';
-import 'package:economycraft/classes/player.dart';
+import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/company_share.dart';
+import 'package:economycraft/classes/modals/player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
-import 'package:economycraft/classes/product.dart';
+import 'package:economycraft/classes/modals/product.dart';
 import 'package:economycraft/common_widgets/product_tile_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:economycraft/common_widgets/build_stat_card_widget.dart';
@@ -12,7 +12,7 @@ import 'package:economycraft/common_widgets/build_edit_dialog_widget.dart';
 import 'package:economycraft/common_widgets/build_editable_field_widget.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:economycraft/common_widgets/linegraph_2_widget.dart';
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/share.dart';
 
 class CompanyPageBackendScreen extends StatefulWidget {
   final Company? company;

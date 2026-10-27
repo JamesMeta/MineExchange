@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
-import 'package:economycraft/classes/admin_message.dart';
+import 'package:economycraft/classes/modals/admin_message.dart';
 import 'dart:developer' as developer;
 
 class ServerInfoScreen extends StatefulWidget {

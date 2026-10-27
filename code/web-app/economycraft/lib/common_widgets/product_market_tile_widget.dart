@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:economycraft/classes/product.dart';
+import 'package:economycraft/classes/modals/product.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';

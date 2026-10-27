@@ -1,6 +1,6 @@
-import 'package:economycraft/classes/company.dart';
+import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/share.dart';
 
 class CompanyInfo {
   final Company company;

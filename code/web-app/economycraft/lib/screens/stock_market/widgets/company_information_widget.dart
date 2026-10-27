@@ -1,5 +1,5 @@
-import 'package:economycraft/classes/buy_order.dart';
-import 'package:economycraft/classes/company.dart';
+import 'package:economycraft/classes/modals/buy_order.dart';
+import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/classes/company_info.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';

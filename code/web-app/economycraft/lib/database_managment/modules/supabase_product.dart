@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
-import 'package:economycraft/classes/product.dart';
+import 'package:economycraft/classes/modals/product.dart';
 
 class SupabaseProduct {
   static final _client = Supabase.instance.client;

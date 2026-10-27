@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/order.dart';
+import 'package:economycraft/classes/modals/order.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

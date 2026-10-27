@@ -1,5 +1,6 @@
-import 'package:economycraft/classes/company.dart';
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/share.dart';
+import 'package:economycraft/screens/loan/loan_screen.dart';
 import 'package:economycraft/screens/stock_market/stock_market_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -100,6 +101,12 @@ final GoRouter _router = GoRouter(
           path: 'player_overview',
           builder: (BuildContext context, GoRouterState state) {
             return const PlayerOverviewScreen();
+          },
+        ),
+        GoRoute(
+          path: 'loans',
+          builder: (BuildContext context, GoRouterState state) {
+            return const LoanScreen();
           },
         ),
         GoRoute(

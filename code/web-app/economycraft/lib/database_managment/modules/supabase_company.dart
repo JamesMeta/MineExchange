@@ -1,8 +1,8 @@
 import 'package:economycraft/database_managment/supabase_helper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
-import 'package:economycraft/classes/company.dart';
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/share.dart';
 import 'package:economycraft/classes/company_info.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:fraction/fraction.dart';

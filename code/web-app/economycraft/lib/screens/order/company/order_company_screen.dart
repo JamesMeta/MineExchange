@@ -1,9 +1,9 @@
-import 'package:economycraft/classes/company.dart';
+import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/screens/order/company/widgets/company_dropdown_widget.dart';
 import 'package:economycraft/screens/order/company/widgets/company_order_footer.dart';
 import 'package:economycraft/screens/order/company/widgets/company_order_list_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:economycraft/classes/order.dart';
+import 'package:economycraft/classes/modals/order.dart';
 import 'package:economycraft/database_managment/supabase_helper.dart';
 
 class OrderCompanyScreen extends StatefulWidget {

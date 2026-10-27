@@ -1,7 +1,7 @@
-import 'package:economycraft/classes/company.dart';
-import 'package:economycraft/classes/company_share.dart';
-import 'package:economycraft/classes/product.dart';
-import 'package:economycraft/classes/share.dart';
+import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/company_share.dart';
+import 'package:economycraft/classes/modals/product.dart';
+import 'package:economycraft/classes/modals/share.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';

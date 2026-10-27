@@ -1,8 +1,8 @@
-import 'package:economycraft/classes/company.dart';
-import 'package:economycraft/classes/product.dart';
+import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
-import 'package:economycraft/classes/order.dart';
+import 'package:economycraft/classes/modals/order.dart';
 import 'dart:math';
 
 class SupabaseOrder {
