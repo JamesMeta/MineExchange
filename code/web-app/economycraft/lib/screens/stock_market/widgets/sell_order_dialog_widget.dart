@@ -1,7 +1,7 @@
 import 'package:economycraft/classes/company_info.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/common_widgets/linegraph_2_widget.dart';
 
 class SellOrderDialogWidget extends StatefulWidget {

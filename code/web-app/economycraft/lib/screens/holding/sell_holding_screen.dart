@@ -1,5 +1,5 @@
 import 'package:economycraft/classes/modals/share.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:economycraft/common_widgets/linegraph_1_widget.dart';

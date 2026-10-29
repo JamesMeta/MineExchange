@@ -1,5 +1,5 @@
 import 'package:economycraft/classes/share_changes.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/screens/home/widgets/build_empty_state.dart';
 import 'package:economycraft/screens/home/widgets/build_section_card.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@ import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/classes/modals/order.dart';
 import 'package:economycraft/classes/modals/product.dart';
 import 'package:flutter/material.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'dart:developer' as developer;
 
 class AdminScreen extends StatefulWidget {

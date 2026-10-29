@@ -5,7 +5,7 @@ import 'package:economycraft/screens/stock_market/widgets/company_data_analytics
 import 'package:economycraft/screens/stock_market/widgets/company_information_widget.dart';
 import 'package:economycraft/screens/stock_market/widgets/owned_shares_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/classes/share_changes.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';

@@ -1,4 +1,4 @@
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/screens/player_overview/widgets/player_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:economycraft/classes/modals/player.dart';

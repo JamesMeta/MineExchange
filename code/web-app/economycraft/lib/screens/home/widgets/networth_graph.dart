@@ -1,6 +1,6 @@
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:economycraft/common_widgets/linegraph_1_widget.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/screens/home/widgets/build_change_indicator.dart';
 import 'package:economycraft/screens/home/widgets/build_empty_state.dart';
 import 'package:economycraft/screens/home/widgets/build_section_card.dart';

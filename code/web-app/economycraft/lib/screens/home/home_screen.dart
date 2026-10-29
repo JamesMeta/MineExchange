@@ -1,4 +1,4 @@
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/screens/home/widgets/build_side_navigation.dart';
 import 'package:economycraft/screens/home/widgets/market_movers.dart';
 import 'package:economycraft/screens/home/widgets/networth_graph.dart';

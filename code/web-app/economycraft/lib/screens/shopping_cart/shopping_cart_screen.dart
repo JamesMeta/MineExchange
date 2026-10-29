@@ -2,7 +2,7 @@ import 'package:economycraft/classes/modals/share.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:economycraft/classes/modals/product.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import 'package:economycraft/common_widgets/empty_cart_widget.dart';

@@ -5,7 +5,7 @@ import 'package:economycraft/classes/modals/share.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/common_widgets/product_market_tile_widget.dart';
 import 'package:economycraft/common_widgets/shopping_cart_widget.dart';
 import 'package:economycraft/classes/price_vs_time.dart';

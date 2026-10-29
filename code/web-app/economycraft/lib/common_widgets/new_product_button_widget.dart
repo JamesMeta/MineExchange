@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 
 class NewProductButtonWidget extends StatefulWidget {
   final int companyId;

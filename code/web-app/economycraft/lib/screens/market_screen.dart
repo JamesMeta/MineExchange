@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/common_widgets/company_tile_widget.dart';
 import 'package:economycraft/common_widgets/shopping_cart_widget.dart';

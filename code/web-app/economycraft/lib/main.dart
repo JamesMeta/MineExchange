@@ -1,6 +1,9 @@
 import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/loan.dart';
 import 'package:economycraft/classes/modals/share.dart';
+import 'package:economycraft/screens/loan/create/create_loan_screen.dart';
 import 'package:economycraft/screens/loan/loan_screen.dart';
+import 'package:economycraft/screens/loan/view/view_loan_screen.dart';
 import 'package:economycraft/screens/stock_market/stock_market_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -24,7 +27,7 @@ import 'package:economycraft/screens/holding/sell_holding_screen.dart';
 import 'package:economycraft/screens/server_info_screen.dart';
 import 'package:economycraft/screens/withdrawl_deposit_funds_screen.dart';
 import 'package:economycraft/screens/admin_screen.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/screens/out_of_date_screen.dart';
 
 const supabaseUrl = 'https://ylgfgklcypqtbqrkhsba.supabase.co';
@@ -108,6 +111,24 @@ final GoRouter _router = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const LoanScreen();
           },
+          routes: [
+            GoRoute(
+              path: 'view',
+              builder: (context, state) {
+                final extra = state.extra;
+
+                if (extra is Loan) {
+                  return ViewLoanScreen(loan: extra);
+                } else {
+                  return ViewLoanScreen(loan: null);
+                }
+              },
+            ),
+            GoRoute(
+              path: 'create',
+              builder: (context, state) => const CreateLoanScreen(),
+            ),
+          ],
         ),
         GoRoute(
           path: 'orders',
@@ -244,7 +265,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'EconomyCraft',
       routerConfig: _router,
-      theme: ThemeData(fontFamily: 'Minecraft'),
+      theme: ThemeData(
+        fontFamily: 'Minecraft',
+        // colorScheme: ColorScheme(
+        //   brightness: Brightness.light,
+        //   primary: Color.fromARGB(255, 74, 237, 217),
+        //   onPrimary: Colors.white,
+        //   secondary: Color.fromARGB(255, 23, 221, 97),
+        //   onSecondary: Colors.white,
+        //   error: Colors.red,
+        //   onError: Colors.white,
+        //   surface: Colors.white,
+        //   onSurface: Colors.black,
+        // ),
+      ),
     );
   }
 }

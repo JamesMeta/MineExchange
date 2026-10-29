@@ -1,6 +1,6 @@
 import 'package:economycraft/classes/modals/share.dart';
 import 'package:flutter/material.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

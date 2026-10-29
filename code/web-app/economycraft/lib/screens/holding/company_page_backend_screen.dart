@@ -3,7 +3,7 @@ import 'package:economycraft/classes/modals/company_share.dart';
 import 'package:economycraft/classes/modals/player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/classes/modals/product.dart';
 import 'package:economycraft/common_widgets/product_tile_widget.dart';
 import 'package:intl/intl.dart';

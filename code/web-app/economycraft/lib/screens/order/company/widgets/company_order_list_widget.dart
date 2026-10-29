@@ -1,5 +1,5 @@
 import 'package:economycraft/classes/modals/order.dart';
-import 'package:economycraft/database_managment/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:economycraft/screens/order/company/widgets/company_order_card.dart';
 import 'package:economycraft/screens/order/company/widgets/company_order_details_dialog.dart';
 import 'package:flutter/material.dart';
