@@ -10,6 +10,9 @@ class CreateLoanScreen extends StatefulWidget {
 class _CreateLoanScreenState extends State<CreateLoanScreen> {
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -49,6 +52,17 @@ class _CreateLoanScreenState extends State<CreateLoanScreen> {
           ),
 
           // Main Content
+          Center(
+            child: Container(
+              width: screenWidth * 0.6,
+              height: screenHeight * 0.9,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: const [],
+              ),
+            ),
+          ),
         ],
       ),
     );

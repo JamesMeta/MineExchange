@@ -318,6 +318,7 @@ class SupabasePlayer {
     }
   }
 
+  //TODO update to subtract Loans
   Future<List<PriceVsTime>> getNetworthvsTimeForUserRowId(int userRowId) async {
     try {
       final response = await _client
@@ -354,6 +355,7 @@ class SupabasePlayer {
     }
   }
 
+  //TODO update to subtract Loans
   Future<Map<String, double>> getUsersNetworthBreakdown(int userRowId) async {
     try {
       final shareEvaluations = await _client
@@ -388,6 +390,69 @@ class SupabasePlayer {
     } catch (e) {
       developer.log('Error fetching player asset evaluation: $e');
       return {};
+    }
+  }
+
+  // Take last 4 weeks and divide by 4
+  Future<double?> calculateUsersAvgWeeklyIncome() async {
+    final userRowId = await getPlayerId();
+
+    final fourWeeksAgo =
+        DateTime.now().subtract(const Duration(days: 28)).toIso8601String();
+
+    try {
+      //Revenue from orders
+
+      final responseOrders = await _client
+          .from('orders')
+          .select(
+            '*, companies(*)',
+          ) // Select order fields and embed company details if needed
+          .eq(
+            'companies.user_id',
+            userRowId,
+          ) // Filter orders by the company's owner
+          .gte(
+            'created_at',
+            fourWeeksAgo,
+          ); // Filter for orders within the last 4 weeks
+
+      double revenue = 0;
+
+      for (var order in responseOrders) {
+        final payment = order['payment'] ?? 0;
+        revenue += payment;
+      }
+
+      //Revenue from taxes
+
+      final responseTaxes = await _client
+          .from('company_history')
+          .select('*, companies(*)')
+          .eq('companies.user_id', userRowId)
+          .gte('created_at', fourWeeksAgo);
+
+      for (var tax in responseTaxes) {
+        final payment = tax['tax_revenue'] ?? 0;
+        revenue += payment;
+      }
+
+      //Revenue from dividends
+
+      final responseDividends = await _client
+          .from('dividend_history')
+          .select('dividend_payout')
+          .eq("user_id", userRowId)
+          .gte('created_at', fourWeeksAgo);
+
+      for (var dividend in responseDividends) {
+        final payment = dividend['dividend_payout'] ?? 0;
+        revenue += payment;
+      }
+
+      return revenue / 4; // (4 weeks)
+    } catch (e) {
+      developer.log('Error fetching player weekly income: $e');
     }
   }
 }
