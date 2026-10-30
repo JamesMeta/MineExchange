@@ -1,8 +1,10 @@
 import 'package:economycraft/classes/modals/loan.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:economycraft/common_widgets/linegraph_1_widget.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class ViewLoanScreen extends StatefulWidget {
   final Loan? loan;
@@ -19,6 +21,8 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
   late bool _autoPay;
   final TextEditingController _paymentController = TextEditingController();
   bool _isSubmittingPayment = false;
+  bool _allowPop = false;
+  bool _isHandlingBackPress = false;
 
   // ── Design Constants ─────────────────────────────────────────────────────────
 
@@ -48,7 +52,8 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
 
   // ── Computed Properties ───────────────────────────────────────────────────────
 
-  Loan get _loan => widget.loan!;
+  late final Loan _loan = widget.loan!;
+  late double _paymentAmount = _loan.currentPaymentAmount;
 
   /// Remaining payment total:
   ///   compoundedPrincipal = currentPrincipal * (1 + interestRate)^remainingInstallments
@@ -106,13 +111,19 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
       return _buildErrorScaffold();
     }
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: Stack(
-        children: [
-          _buildBackground(),
-          Center(child: _buildMainCard(screenWidth, screenHeight)),
-        ],
+    return PopScope(
+      canPop: _allowPop,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) _handleBackPress();
+      },
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: Stack(
+          children: [
+            _buildBackground(),
+            Center(child: _buildMainCard(screenWidth, screenHeight)),
+          ],
+        ),
       ),
     );
   }
@@ -140,6 +151,12 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
       ),
       centerTitle: true,
       backgroundColor: _accentTealLight,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          _handleBackPress();
+        },
+      ),
     );
   }
 
@@ -350,7 +367,7 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
         _buildInfoTile(
           icon: Icons.payments,
           label: 'Current Payment Amount',
-          value: _formatCurrency(_loan.currentPaymentAmount),
+          value: _formatCurrency(_paymentAmount),
           accent: _accentGreen,
         ),
         _buildInfoTile(
@@ -558,7 +575,7 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
           Padding(
             padding: const EdgeInsets.only(left: 46),
             child: Text(
-              'This amount will be subtracted from your account on the installment data.',
+              'This amount will be subtracted from your account on the installment date.',
               style: TextStyle(fontSize: 12, color: Colors.grey[600]),
             ),
           ),
@@ -711,12 +728,10 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
   // ── Actions ───────────────────────────────────────────────────────────────────
 
   /// Toggles auto-pay on/off. Replace the TODO with the database call.
-  void _toggleAutoPay(bool value) {
+  void _toggleAutoPay(bool value) async {
     setState(() => _autoPay = value);
 
-    // TODO: Persist auto-pay preference to database.
-    // Example:
-    //   await SupabaseHelper.loan.updateAutoPay(loanId: _loan.id, autoPay: value);
+    SupabaseHelper.loan.updateLoanAutopaymentStatus(_loan, value);
   }
 
   /// Submits a manual payment against the loan. Replace the TODO with the
@@ -733,20 +748,51 @@ class _ViewLoanScreenState extends State<ViewLoanScreen> {
     setState(() => _isSubmittingPayment = true);
 
     try {
-      // TODO: Submit payment to the database.
-      // Example:
-      //   await SupabaseHelper.loan.makePayment(loanId: _loan.id, amount: amount);
+      final loan = _loan;
 
-      // Simulate network delay for UI demonstration purposes.
-      await Future.delayed(const Duration(milliseconds: 600));
+      if (loan == null) {
+        return;
+      }
+
+      final response = await SupabaseHelper.loan.setLoanPaymentForPayPeriod(
+        loan,
+        amount,
+      );
 
       _paymentController.clear();
-      _showSnackBar('Payment of ${_formatCurrency(amount)} submitted!');
+
+      if (response == true) {
+        _showSnackBar('Payment of ${_formatCurrency(amount)} submitted!');
+
+        setState(() {
+          _paymentAmount = amount;
+        });
+      } else {
+        _showSnackBar(
+          'Failed to submit payment: response was empty or null',
+          isError: true,
+        );
+      }
     } catch (e) {
       _showSnackBar('Failed to submit payment: $e', isError: true);
     } finally {
       if (mounted) setState(() => _isSubmittingPayment = false);
     }
+  }
+
+  void _handleBackPress() {
+    if (_isHandlingBackPress) return;
+
+    _isHandlingBackPress = true;
+    final hasChanges =
+        _autoPay != _loan.autoPay ||
+        _loan.currentPaymentAmount != _paymentAmount;
+
+    setState(() => _allowPop = true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.pop(hasChanges ? true : null);
+    });
   }
 
   void _showSnackBar(String message, {bool isError = false}) {
