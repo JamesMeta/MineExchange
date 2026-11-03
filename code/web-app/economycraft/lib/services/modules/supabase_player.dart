@@ -256,6 +256,29 @@ class SupabasePlayer {
     }
   }
 
+  Future<double> getUsersOwedAmount() async {
+    final user = _client.auth.currentUser;
+    if (user == null) {
+      return 0.0;
+    }
+    try {
+      final userRowId = await getPlayerId();
+      final response = await _client
+          .from("loans")
+          .select('principal')
+          .eq('user_id', userRowId);
+
+      double totalOwed = 0.0;
+      for (var loan in response) {
+        totalOwed += loan['principal']?.toDouble() ?? 0.0;
+      }
+      return totalOwed;
+    } catch (e) {
+      developer.log('Error fetching user owed amount: $e');
+      return 0.0;
+    }
+  }
+
   Future<double> getUsersAssetEvaluationForUserRowId(int userRowId) async {
     try {
       final shareEvaluations = await _client
@@ -397,8 +420,9 @@ class SupabasePlayer {
   Future<double?> calculateUsersAvgWeeklyIncome() async {
     final userRowId = await getPlayerId();
 
+    final now = DateTime.now();
     final fourWeeksAgo =
-        DateTime.now().subtract(const Duration(days: 28)).toIso8601String();
+        now.subtract(const Duration(days: 28)).toIso8601String();
 
     try {
       //Revenue from orders
@@ -418,10 +442,20 @@ class SupabasePlayer {
           ); // Filter for orders within the last 4 weeks
 
       double revenue = 0;
+      DateTime? earliestEntry;
+
+      void includeEntryDate(dynamic value) {
+        final date = DateTime.tryParse(value?.toString() ?? '');
+        if (date != null &&
+            (earliestEntry == null || date.isBefore(earliestEntry!))) {
+          earliestEntry = date;
+        }
+      }
 
       for (var order in responseOrders) {
-        final payment = order['payment'] ?? 0;
-        revenue += payment;
+        includeEntryDate(order['created_at']);
+        final payment = order['payment'];
+        if (payment is num) revenue += payment.toDouble();
       }
 
       //Revenue from taxes
@@ -433,26 +467,38 @@ class SupabasePlayer {
           .gte('created_at', fourWeeksAgo);
 
       for (var tax in responseTaxes) {
-        final payment = tax['tax_revenue'] ?? 0;
-        revenue += payment;
+        includeEntryDate(tax['created_at']);
+        final payment = tax['tax_revenue'];
+        if (payment is num) revenue += payment.toDouble();
       }
 
       //Revenue from dividends
 
       final responseDividends = await _client
           .from('dividend_history')
-          .select('dividend_payout')
+          .select('dividend_payout, created_at')
           .eq("user_id", userRowId)
           .gte('created_at', fourWeeksAgo);
 
       for (var dividend in responseDividends) {
-        final payment = dividend['dividend_payout'] ?? 0;
-        revenue += payment;
+        includeEntryDate(dividend['created_at']);
+        final payment = dividend['dividend_payout'];
+        if (payment is num) revenue += payment.toDouble();
       }
 
-      return revenue / 4; // (4 weeks)
+      if (earliestEntry == null) return 0;
+
+      final elapsed =
+          now.difference(earliestEntry!).inMicroseconds /
+          Duration.microsecondsPerDay /
+          7;
+      final weeksOfData = elapsed.clamp(0, 4).toDouble();
+      if (weeksOfData == 0) return 0;
+
+      return revenue / weeksOfData;
     } catch (e) {
       developer.log('Error fetching player weekly income: $e');
+      return null;
     }
   }
 }
