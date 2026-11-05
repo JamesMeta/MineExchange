@@ -144,4 +144,50 @@ class SupabaseLoan {
       return null;
     }
   }
+
+  Future<bool?> createLoan(
+    double principal,
+    int durationWeeks,
+    bool fixedRate,
+    bool autoPay,
+  ) async {
+    final user = _client.auth.currentUser;
+    if (user == null) {
+      return null;
+    }
+    try {
+      final userRowId = await SupabaseHelper.player.getPlayerId();
+
+      final metrics = await SupabaseHelper.loan.getEconomyMetrics();
+
+      final interestRate =
+          fixedRate
+              ? (metrics?.interestRate ?? 0.0) + 0.02
+              : (metrics?.interestRate ?? 0.0);
+
+      final oneWeekFromNow = DateTime.now().add(const Duration(days: 7));
+
+      final response =
+          await _client.from("loans").insert({
+            "user_id": userRowId,
+            "principal": principal,
+            "starting_principal": principal,
+            "remaining_installments": durationWeeks,
+            "interest_rate": interestRate,
+            "next_payment_due": oneWeekFromNow.toIso8601String(),
+            "fixed_rate": fixedRate,
+            "auto_pay": autoPay,
+            "current_payment_amount": 0.0, // Initialize with 0
+            "total_paid": 0.0, // Initialize with 0
+          }).select();
+
+      if (response == null || response.isEmpty) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      developer.log('Error creating loan: $e');
+      return null;
+    }
+  }
 }
