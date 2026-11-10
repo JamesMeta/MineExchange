@@ -1498,17 +1498,17 @@ class _CreateLoanScreenState extends State<CreateLoanScreen> {
     double loans,
   ) {
     try {
-      final double balance = assets - loans;
+      // final double balance = assets - loans;
 
       // When interest rate is zero, the formula degenerates (0/0 → NaN).
       // Fall back to simple multiplication.
       if (interestRate == 0) {
-        return (maxWeeklyPayment * weekLoanDuration) + balance;
+        return (maxWeeklyPayment * weekLoanDuration); //+ balance;
       }
 
       final lCash = maxWeeklyPayment * (weekLoanDuration / (1 + interestRate));
 
-      final result = lCash + balance;
+      final result = lCash; // + balance;
       return result.isFinite ? result : 0;
     } catch (e) {
       return 0;

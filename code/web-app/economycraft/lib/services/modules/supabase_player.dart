@@ -430,7 +430,7 @@ class SupabasePlayer {
       final responseOrders = await _client
           .from('orders')
           .select(
-            '*, companies(*)',
+            '*, companies:company_id!inner(*)',
           ) // Select order fields and embed company details if needed
           .eq(
             'companies.user_id',
@@ -462,7 +462,7 @@ class SupabasePlayer {
 
       final responseTaxes = await _client
           .from('company_history')
-          .select('*, companies(*)')
+          .select('*, companies:company_id!inner(*)')
           .eq('companies.user_id', userRowId)
           .gte('created_at', fourWeeksAgo);
 
