@@ -25,15 +25,11 @@ class _BuildSideNavigationState extends State<BuildSideNavigation> {
       },
 
       {'title': 'Products', 'icon': Icons.storefront, 'route': '/home/market'},
-      {
-        'title': 'Stocks',
-        'icon': Icons.area_chart,
-        'route': '/home/stock_market',
-      },
+
       {'title': 'Orders', 'icon': Icons.receipt_long, 'route': '/home/orders'},
 
       {
-        'title': 'My Holdings',
+        'title': 'My Colony',
         'icon': Icons.pie_chart,
         'route': '/home/holdings',
       },
@@ -43,19 +39,9 @@ class _BuildSideNavigationState extends State<BuildSideNavigation> {
         'route': '/home/loans',
       },
       {
-        'title': 'Funds',
-        'icon': Icons.account_balance_wallet,
-        'route': '/home/withdrawl_deposit_funds',
-      },
-      {
-        'title': 'Players',
-        'icon': Icons.groups,
-        'route': '/home/player_overview',
-      },
-      {
-        'title': 'Server Info',
-        'icon': Icons.info,
-        'route': '/home/server_info',
+        'title': 'Inventory',
+        'icon': Icons.inventory_2,
+        'route': '/home/inventory',
       },
     ];
 
