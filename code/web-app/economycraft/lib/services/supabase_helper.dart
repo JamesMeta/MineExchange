@@ -1,6 +1,7 @@
 import 'package:economycraft/services/modules/supabase_admin.dart';
 import 'package:economycraft/services/modules/supabase_company.dart';
 import 'package:economycraft/services/modules/supabase_home.dart';
+import 'package:economycraft/services/modules/supabase_inventory.dart';
 import 'package:economycraft/services/modules/supabase_loan.dart';
 import 'package:economycraft/services/modules/supabase_order.dart';
 import 'package:economycraft/services/modules/supabase_product.dart';
@@ -22,4 +23,5 @@ class SupabaseHelper {
   static final admin = SupabaseAdmin();
   static final home = SupabaseHome();
   static final loan = SupabaseLoan();
+  static final inventory = SupabaseInventory();
 }
