@@ -1,6 +1,7 @@
 import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/classes/modals/loan.dart';
 import 'package:economycraft/classes/modals/share.dart';
+import 'package:economycraft/screens/inventory/view_inventory_screen.dart';
 import 'package:economycraft/screens/loan/create/create_loan_screen.dart';
 import 'package:economycraft/screens/loan/loan_screen.dart';
 import 'package:economycraft/screens/loan/view/view_loan_screen.dart';
@@ -129,6 +130,12 @@ final GoRouter _router = GoRouter(
               builder: (context, state) => const CreateLoanScreen(),
             ),
           ],
+        ),
+        GoRoute(
+          path: 'inventory',
+          builder: (BuildContext context, GoRouterState state) {
+            return const ViewInventoryScreen();
+          },
         ),
         GoRoute(
           path: 'orders',
