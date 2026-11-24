@@ -4,8 +4,7 @@ import 'package:economycraft/common_widgets/base_screen_widget.dart';
 import 'package:economycraft/common_widgets/screen_central_body.dart';
 import 'package:economycraft/screens/inventory/widgets/inventory_item_grid_tile.dart';
 import 'package:economycraft/screens/inventory/widgets/widgets/inventory_item_dialog_widget.dart';
-// TODO: Uncomment when switching from toy data to real backend.
-// import 'package:economycraft/services/supabase_helper.dart';
+import 'package:economycraft/services/supabase_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -223,7 +222,7 @@ class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Deposit items in-game to see them here.',
+            'Deposit items in-game or purchase them on the market to see them here.',
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
         ],
@@ -317,113 +316,7 @@ class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
     });
   }
 
-  /// TODO: Replace with SupabaseHelper.inventory.getUserInventory()
-  /// once the backend is fully wired up. Currently returns toy data.
   Future<List<Inventory>?> _fetchInventoryItems() {
-    // return SupabaseHelper.inventory.getUserInventory();
-    return _getToyInventoryItems();
-  }
-
-  // ── Toy Data (replace with real service calls) ────────────────────────────
-
-  Future<List<Inventory>?> _getToyInventoryItems() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    final toyItems = [
-      Inventory(
-        id: 1,
-        createdAt: '2026-01-15',
-        marketItem: MarketItem(
-          id: 1,
-          createdAt: '2026-01-01',
-          name: 'Diamond',
-          minecraftTag: 'minecraft:diamond',
-          avatarUrl: 'https://minecraft.wiki/images/Diamond_JE3_BE3.png',
-        ),
-        quantity: 64,
-        userId: 1,
-      ),
-      Inventory(
-        id: 2,
-        createdAt: '2026-01-16',
-        marketItem: MarketItem(
-          id: 2,
-          createdAt: '2026-01-01',
-          name: 'Iron Ingot',
-          minecraftTag: 'minecraft:iron_ingot',
-          avatarUrl: 'https://minecraft.wiki/images/Iron_Ingot_JE3_BE2.png',
-        ),
-        quantity: 128,
-        userId: 1,
-      ),
-      Inventory(
-        id: 3,
-        createdAt: '2026-01-17',
-        marketItem: MarketItem(
-          id: 3,
-          createdAt: '2026-01-01',
-          name: 'Gold Ingot',
-          minecraftTag: 'minecraft:gold_ingot',
-          avatarUrl: 'https://minecraft.wiki/images/Gold_Ingot_JE4_BE2.png',
-        ),
-        quantity: 32,
-        userId: 1,
-      ),
-      Inventory(
-        id: 4,
-        createdAt: '2026-01-18',
-        marketItem: MarketItem(
-          id: 4,
-          createdAt: '2026-01-01',
-          name: 'Emerald',
-          minecraftTag: 'minecraft:emerald',
-          avatarUrl: 'https://minecraft.wiki/images/Emerald_JE3_BE3.png',
-        ),
-        quantity: 16,
-        userId: 1,
-      ),
-      Inventory(
-        id: 5,
-        createdAt: '2026-01-19',
-        marketItem: MarketItem(
-          id: 5,
-          createdAt: '2026-01-01',
-          name: 'Netherite Ingot',
-          minecraftTag: 'minecraft:netherite_ingot',
-          avatarUrl:
-              'https://minecraft.wiki/images/Netherite_Ingot_JE1_BE2.png',
-        ),
-        quantity: 4,
-        userId: 1,
-      ),
-      Inventory(
-        id: 6,
-        createdAt: '2026-01-20',
-        marketItem: MarketItem(
-          id: 6,
-          createdAt: '2026-01-01',
-          name: 'Lapis Lazuli',
-          minecraftTag: 'minecraft:lapis_lazuli',
-          avatarUrl: 'https://minecraft.wiki/images/Lapis_Lazuli_JE2_BE2.png',
-        ),
-        quantity: 256,
-        userId: 1,
-      ),
-      Inventory(
-        id: 7,
-        createdAt: '2026-01-21',
-        marketItem: MarketItem(
-          id: 7,
-          createdAt: '2026-01-01',
-          name: 'Redstone Dust',
-          minecraftTag: 'minecraft:redstone',
-          avatarUrl: 'https://minecraft.wiki/images/Redstone_Dust_JE2_BE2.png',
-        ),
-        quantity: 512,
-        userId: 1,
-      ),
-    ];
-
-    return toyItems;
+    return SupabaseHelper.inventory.getUserInventory();
   }
 }

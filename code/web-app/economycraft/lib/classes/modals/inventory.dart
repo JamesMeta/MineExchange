@@ -19,7 +19,7 @@ class Inventory {
     return Inventory(
       id: map['id'],
       createdAt: map['created_at'],
-      marketItem: MarketItem.fromMap(map['market_item']),
+      marketItem: MarketItem.fromMap(map['valid_market_items']),
       quantity: map['quantity'],
       userId: map['user_id'],
     );
