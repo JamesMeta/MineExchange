@@ -1,4 +1,5 @@
 import 'package:economycraft/classes/modals/market_item.dart';
+import 'package:economycraft/classes/modals/player.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
 import 'package:economycraft/classes/modals/product.dart';
@@ -71,7 +72,7 @@ class SupabaseProduct {
     try {
       final response = await _client
           .from('products')
-          .select('*, valid_market_items:market_item_id(*)')
+          .select('*, valid_market_items:market_item_id(*), users:user_id(*)')
           .eq('company_id', companyId)
           .order('price', ascending: true);
       if (response.isEmpty) {
@@ -86,8 +87,9 @@ class SupabaseProduct {
               price: product['price'],
               quantity: product['quantity'],
               marketItem: MarketItem.fromMap(product['valid_market_items']),
-
+              player: Player.fromMap(product['users']),
               createdAt: product['created_at'],
+              isSell: product['is_sell'] ?? false,
             );
           }).toList();
       return products;
@@ -101,7 +103,7 @@ class SupabaseProduct {
     try {
       final response = await _client
           .from('products')
-          .select('*, valid_market_items:market_item_id(*)')
+          .select('*, valid_market_items:market_item_id(*), users:user_id(*)')
           .order('created_at', ascending: false);
       if (response.isEmpty) {
         return [];
@@ -115,7 +117,9 @@ class SupabaseProduct {
               price: product['price'],
               quantity: product['quantity'],
               marketItem: MarketItem.fromMap(product['valid_market_items']),
+              player: Player.fromMap(product['users']),
               createdAt: product['created_at'],
+              isSell: product['is_sell'] ?? false,
             );
           }).toList();
       return products;
@@ -130,7 +134,9 @@ class SupabaseProduct {
       final response =
           await _client
               .from('products')
-              .select('*, valid_market_items:market_item_id(*)')
+              .select(
+                '*, valid_market_items:market_item_id(*), users:user_id(*)',
+              )
               .eq('id', productId)
               .limit(1)
               .single();
@@ -144,7 +150,9 @@ class SupabaseProduct {
         price: response['price'],
         quantity: response['quantity'],
         marketItem: MarketItem.fromMap(response['valid_market_items']),
+        player: Player.fromMap(response['users']),
         createdAt: response['created_at'],
+        isSell: response['is_sell'] ?? false,
       );
     } catch (e) {
       developer.log('Error fetching product by ID: $e');

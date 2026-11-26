@@ -1,5 +1,6 @@
 import 'package:economycraft/classes/modals/company.dart';
 import 'package:economycraft/classes/modals/market_item.dart';
+import 'package:economycraft/classes/modals/player.dart';
 import 'package:economycraft/classes/modals/product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
@@ -128,6 +129,8 @@ class SupabaseOrder {
         price,
         quantity,
         valid_market_items:market_item_id(*)
+        users:user_id(*)
+        is_sell
       )
     ''')
           .eq('user_id', userRowId)
@@ -161,6 +164,8 @@ class SupabaseOrder {
                 quantity: product['quantity'],
                 marketItem: MarketItem.fromMap(product['valid_market_items']),
                 createdAt: product['created_at'],
+                player: Player.fromMap(product['users']),
+                isSell: product['is_sell'] ?? false,
               ),
               company: Company(
                 id: company['id'],
@@ -201,6 +206,8 @@ class SupabaseOrder {
               price,
               quantity,
               valid_market_items:market_item_id(*)
+              users:user_id(*)
+              is_sell
             )''')
           .eq('company_id', companyId)
           .order('created_at', ascending: false);
@@ -232,6 +239,8 @@ class SupabaseOrder {
                 quantity: product['quantity'],
                 marketItem: MarketItem.fromMap(product['valid_market_items']),
                 createdAt: product['created_at'],
+                player: Player.fromMap(product['users']),
+                isSell: product['is_sell'] ?? false,
               ),
               company: Company(
                 id: company['id'],
