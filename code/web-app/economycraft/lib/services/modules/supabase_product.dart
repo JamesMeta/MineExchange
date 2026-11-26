@@ -1,3 +1,4 @@
+import 'package:economycraft/classes/modals/market_item.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
 import 'package:economycraft/classes/modals/product.dart';
@@ -5,6 +6,8 @@ import 'package:economycraft/classes/modals/product.dart';
 class SupabaseProduct {
   static final _client = Supabase.instance.client;
 
+  //TODO
+  // Migrate the following method to use MarketItem instead of individual fields
   Future<void> addProductToCompany(
     int companyId,
     String name,
@@ -29,6 +32,8 @@ class SupabaseProduct {
     }
   }
 
+  //TODO
+  // Migrate the following method to use MarketItem instead of individual fields
   Future<void> updateProduct(
     int productId,
     String name,
@@ -66,7 +71,7 @@ class SupabaseProduct {
     try {
       final response = await _client
           .from('products')
-          .select()
+          .select('*, valid_market_items:market_item_id(*)')
           .eq('company_id', companyId)
           .order('price', ascending: true);
       if (response.isEmpty) {
@@ -80,10 +85,9 @@ class SupabaseProduct {
               description: product['description'],
               price: product['price'],
               quantity: product['quantity'],
-              avatarUrl: product['avatar_url'],
-              companyId: product['company_id'],
-              minecraftTag: product['minecraft_tag'],
-              createdAt: DateTime.parse(product['created_at']),
+              marketItem: MarketItem.fromMap(product['valid_market_items']),
+
+              createdAt: product['created_at'],
             );
           }).toList();
       return products;
@@ -95,7 +99,10 @@ class SupabaseProduct {
 
   Future<List<Product>> getAllProducts() async {
     try {
-      final response = await _client.from('products').select();
+      final response = await _client
+          .from('products')
+          .select('*, valid_market_items:market_item_id(*)')
+          .order('created_at', ascending: false);
       if (response.isEmpty) {
         return [];
       }
@@ -107,10 +114,8 @@ class SupabaseProduct {
               description: product['description'],
               price: product['price'],
               quantity: product['quantity'],
-              avatarUrl: product['avatar_url'],
-              companyId: product['company_id'],
-              minecraftTag: product['minecraft_tag'],
-              createdAt: DateTime.parse(product['created_at']),
+              marketItem: MarketItem.fromMap(product['valid_market_items']),
+              createdAt: product['created_at'],
             );
           }).toList();
       return products;
@@ -125,7 +130,7 @@ class SupabaseProduct {
       final response =
           await _client
               .from('products')
-              .select()
+              .select('*, valid_market_items:market_item_id(*)')
               .eq('id', productId)
               .limit(1)
               .single();
@@ -138,10 +143,8 @@ class SupabaseProduct {
         description: response['description'],
         price: response['price'],
         quantity: response['quantity'],
-        avatarUrl: response['avatar_url'],
-        companyId: response['company_id'],
-        minecraftTag: response['minecraft_tag'],
-        createdAt: DateTime.parse(response['created_at']),
+        marketItem: MarketItem.fromMap(response['valid_market_items']),
+        createdAt: response['created_at'],
       );
     } catch (e) {
       developer.log('Error fetching product by ID: $e');

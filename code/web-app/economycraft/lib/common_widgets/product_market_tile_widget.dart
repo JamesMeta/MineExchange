@@ -72,7 +72,7 @@ class _ProductTileWidgetState extends State<ProductMarketTileWidget> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(7),
                       child: Image.network(
-                        widget.product.avatarUrl,
+                        widget.product.marketItem.avatarUrl,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
@@ -124,7 +124,7 @@ class _ProductTileWidgetState extends State<ProductMarketTileWidget> {
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Text(
-                                widget.product.minecraftTag,
+                                widget.product.marketItem.minecraftTag,
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -269,7 +269,7 @@ class _ProductTileWidgetState extends State<ProductMarketTileWidget> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(7),
                             child: Image.network(
-                              widget.product.avatarUrl,
+                              widget.product.marketItem.avatarUrl,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
                                 return Container(

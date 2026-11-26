@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:economycraft/classes/modals/inventory.dart';
+import 'package:economycraft/classes/modals/inventory_item.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:economycraft/common_widgets/linegraph_1_widget.dart';
 import 'package:economycraft/services/supabase_helper.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class InventoryItemDialogWidget extends StatefulWidget {
-  final Inventory inventoryItem;
+  final InventoryItem inventoryItem;
 
   const InventoryItemDialogWidget({super.key, required this.inventoryItem});
 
@@ -41,8 +41,7 @@ enum _TimeRange {
   final int hours;
 }
 
-class _InventoryItemDialogWidgetState
-    extends State<InventoryItemDialogWidget> {
+class _InventoryItemDialogWidgetState extends State<InventoryItemDialogWidget> {
   late Future<List<PriceVsTime>> _priceHistoryFuture;
   _TimeRange _selectedRange = _TimeRange.oneMonth;
 
@@ -136,20 +135,22 @@ class _InventoryItemDialogWidgetState
       child: CachedNetworkImage(
         imageUrl: widget.inventoryItem.marketItem.avatarUrl,
         fit: BoxFit.contain,
-        placeholder: (context, url) => const Center(
-          child: SizedBox(
-            width: 24,
-            height: 24,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          ),
-        ),
-        errorWidget: (context, url, error) => const Center(
-          child: Icon(
-            Icons.broken_image_outlined,
-            size: 40,
-            color: Colors.grey,
-          ),
-        ),
+        placeholder:
+            (context, url) => const Center(
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+        errorWidget:
+            (context, url, error) => const Center(
+              child: Icon(
+                Icons.broken_image_outlined,
+                size: 40,
+                color: Colors.grey,
+              ),
+            ),
       ),
     );
   }
@@ -201,34 +202,36 @@ class _InventoryItemDialogWidgetState
   Widget _buildTimeRangeSelector() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: _TimeRange.values.map((range) {
-        final isSelected = range == _selectedRange;
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 3),
-          child: ChoiceChip(
-            label: Text(
-              range.label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: isSelected
-                    ? Colors.white
-                    : InventoryItemDialogWidget._textDark,
+      children:
+          _TimeRange.values.map((range) {
+            final isSelected = range == _selectedRange;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: ChoiceChip(
+                label: Text(
+                  range.label,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color:
+                        isSelected
+                            ? Colors.white
+                            : InventoryItemDialogWidget._textDark,
+                  ),
+                ),
+                selected: isSelected,
+                selectedColor: InventoryItemDialogWidget._accentTeal,
+                backgroundColor: Colors.grey[100],
+                side: BorderSide.none,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                onSelected: (_) => _onRangeChanged(range),
               ),
-            ),
-            selected: isSelected,
-            selectedColor: InventoryItemDialogWidget._accentTeal,
-            backgroundColor: Colors.grey[100],
-            side: BorderSide.none,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            onSelected: (_) => _onRangeChanged(range),
-          ),
-        );
-      }).toList(),
+            );
+          }).toList(),
     );
   }
 

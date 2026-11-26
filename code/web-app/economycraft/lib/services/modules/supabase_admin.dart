@@ -1,3 +1,4 @@
+import 'package:economycraft/classes/modals/market_item.dart';
 import 'package:economycraft/services/supabase_helper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
@@ -312,7 +313,7 @@ class SupabaseAdmin {
     try {
       final response = await _client
           .from('products')
-          .select()
+          .select('*, valid_market_items:market_item_id(*)')
           .eq('verified', false)
           .order('created_at', ascending: false);
       if (response.isEmpty) {
@@ -325,14 +326,11 @@ class SupabaseAdmin {
               name: product['name'],
               description: product['description'],
               price: product['price']?.toDouble() ?? 0.0,
-              companyId: product['company_id'],
-              createdAt: DateTime.parse(product['created_at']),
-              isVerified: product['verified'] ?? false,
+
+              createdAt: product['created_at'],
+
               quantity: product['quantity'] ?? 0,
-              avatarUrl: product['avatar_url'] ?? '',
-              minecraftTag: product['minecraft_tag'] ?? '',
-              value: product['value']?.toDouble() ?? 0.0,
-              nicheCoefficient: product['niche_coefficient']?.toDouble() ?? 0.0,
+              marketItem: MarketItem.fromMap(product['valid_market_items']),
             );
           }).toList();
       return products;

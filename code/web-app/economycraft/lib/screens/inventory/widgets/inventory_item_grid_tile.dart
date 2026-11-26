@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:economycraft/classes/modals/inventory.dart';
+import 'package:economycraft/classes/modals/inventory_item.dart';
 import 'package:flutter/material.dart';
 
 class InventoryItemGridTile extends StatelessWidget {
-  final Inventory inventoryItem;
+  final InventoryItem inventoryItem;
   final VoidCallback? onTap;
 
   const InventoryItemGridTile({
@@ -29,9 +29,7 @@ class InventoryItemGridTile extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: const Color.fromARGB(255, 220, 220, 220),
-            ),
+            border: Border.all(color: const Color.fromARGB(255, 220, 220, 220)),
             boxShadow: const [
               BoxShadow(
                 color: Color.fromARGB(20, 0, 0, 0),
@@ -67,20 +65,22 @@ class InventoryItemGridTile extends StatelessWidget {
       child: CachedNetworkImage(
         imageUrl: inventoryItem.marketItem.avatarUrl,
         fit: BoxFit.contain,
-        placeholder: (context, url) => const Center(
-          child: SizedBox(
-            width: 24,
-            height: 24,
-            child: CircularProgressIndicator(strokeWidth: 2),
-          ),
-        ),
-        errorWidget: (context, url, error) => const Center(
-          child: Icon(
-            Icons.broken_image_outlined,
-            size: 40,
-            color: Colors.grey,
-          ),
-        ),
+        placeholder:
+            (context, url) => const Center(
+              child: SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+        errorWidget:
+            (context, url, error) => const Center(
+              child: Icon(
+                Icons.broken_image_outlined,
+                size: 40,
+                color: Colors.grey,
+              ),
+            ),
       ),
     );
   }

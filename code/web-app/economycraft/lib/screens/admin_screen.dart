@@ -1184,7 +1184,7 @@ class _AdminScreenState extends State<AdminScreen>
                                             8,
                                           ),
                                           child: Image.network(
-                                            product.avatarUrl,
+                                            product.marketItem.avatarUrl,
                                             fit: BoxFit.cover,
                                             errorBuilder:
                                                 (context, error, stackTrace) =>
@@ -1376,7 +1376,7 @@ class _AdminScreenState extends State<AdminScreen>
                                             8,
                                           ),
                                           child: Image.network(
-                                            product.avatarUrl,
+                                            product.marketItem.avatarUrl,
                                             fit: BoxFit.cover,
                                             errorBuilder:
                                                 (context, error, stackTrace) =>
@@ -1658,7 +1658,7 @@ class _AdminScreenState extends State<AdminScreen>
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.network(
-                                    product.avatarUrl,
+                                    product.marketItem.avatarUrl,
                                     fit: BoxFit.cover,
                                     errorBuilder:
                                         (context, error, stackTrace) =>
@@ -1688,7 +1688,7 @@ class _AdminScreenState extends State<AdminScreen>
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      'Minecraft Tag: ${product.minecraftTag}',
+                                      'Minecraft Tag: ${product.marketItem.minecraftTag}',
                                       style: TextStyle(
                                         color: Colors.grey.shade600,
                                         fontSize: 14,
@@ -1696,7 +1696,7 @@ class _AdminScreenState extends State<AdminScreen>
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      'Company ID: ${product.companyId}',
+                                      'Company ID: [THIS NEEDS TO BE REWORKED]',
                                       style: TextStyle(
                                         color: Colors.grey.shade600,
                                         fontSize: 14,

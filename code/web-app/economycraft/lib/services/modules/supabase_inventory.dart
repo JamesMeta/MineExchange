@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/modals/inventory.dart';
+import 'package:economycraft/classes/modals/inventory_item.dart';
 import 'package:economycraft/classes/price_vs_time.dart';
 import 'package:economycraft/services/supabase_helper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -7,7 +7,7 @@ import 'dart:developer' as developer;
 class SupabaseInventory {
   static final _client = Supabase.instance.client;
 
-  Future<List<Inventory>?> getUserInventory() async {
+  Future<List<InventoryItem>?> getUserInventory() async {
     final user = _client.auth.currentUser;
     if (user == null) {
       return null;
@@ -21,7 +21,7 @@ class SupabaseInventory {
           .eq("user_id", userRowId);
 
       return response
-          .map((inventoryMap) => Inventory.fromMap(inventoryMap))
+          .map((inventoryMap) => InventoryItem.fromMap(inventoryMap))
           .toList();
     } catch (e) {
       developer.log('Error fetching user inventory $e');

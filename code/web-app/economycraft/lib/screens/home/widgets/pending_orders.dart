@@ -138,16 +138,16 @@ class _PendingOrdersState extends State<PendingOrders> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           image:
-              order.product?.avatarUrl != null
+              order.product?.marketItem.avatarUrl != null
                   ? DecorationImage(
-                    image: NetworkImage(order.product!.avatarUrl),
+                    image: NetworkImage(order.product!.marketItem.avatarUrl),
                     fit: BoxFit.cover,
                   )
                   : null,
           color: Colors.grey[200],
         ),
         child:
-            order.product?.avatarUrl == null
+            order.product?.marketItem.avatarUrl == null
                 ? const Icon(Icons.inventory_2, color: Colors.grey)
                 : null,
       ),

@@ -50,7 +50,7 @@ class CompanyOrderCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   image: DecorationImage(
                     image: NetworkImage(
-                      order.product?.avatarUrl ??
+                      order.product?.marketItem.avatarUrl ??
                           'https://placehold.co/80x80?text=No+Image',
                     ),
                     fit: BoxFit.cover,

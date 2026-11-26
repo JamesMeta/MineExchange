@@ -588,7 +588,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(7),
               child: Image.network(
-                product.avatarUrl,
+                product.marketItem.avatarUrl,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
@@ -635,7 +635,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    product.minecraftTag,
+                    product.marketItem.minecraftTag,
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
