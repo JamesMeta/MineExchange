@@ -26,7 +26,7 @@ class _ProductTileWidgetState extends State<ProductTileWidget> {
     _descriptionController.text = widget.product.description;
     _priceController.text = widget.product.price.toString();
     _quantityController.text = widget.product.quantity.toString();
-    _minecraftTagController.text = widget.product.minecraftTag;
+    _minecraftTagController.text = widget.product.marketItem.minecraftTag;
   }
 
   @override
@@ -74,7 +74,7 @@ class _ProductTileWidgetState extends State<ProductTileWidget> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(7),
                   child: Image.network(
-                    widget.product.avatarUrl,
+                    widget.product.marketItem.avatarUrl,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
@@ -123,7 +123,7 @@ class _ProductTileWidgetState extends State<ProductTileWidget> {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            widget.product.minecraftTag,
+                            widget.product.marketItem.minecraftTag,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -359,7 +359,7 @@ class _ProductTileWidgetState extends State<ProductTileWidget> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(9),
                                     child: Image.network(
-                                      widget.product.avatarUrl,
+                                      widget.product.marketItem.avatarUrl,
                                       fit: BoxFit.cover,
                                       errorBuilder: (
                                         context,
@@ -697,7 +697,9 @@ class _ProductTileWidgetState extends State<ProductTileWidget> {
             _priceController.text.replaceAll('\$', ''),
           );
           widget.product.quantity = int.parse(_quantityController.text);
-          widget.product.minecraftTag = _minecraftTagController.text;
+          //TODO
+          // FIGURE OUT WHAT THIS DOES AND WHY ITS MADE THIS WAY
+          //widget.product.marketItem.minecraftTag = _minecraftTagController.text;
         });
       }
     } catch (e) {
@@ -729,8 +731,8 @@ class _ProductTileWidgetState extends State<ProductTileWidget> {
           widget.product.description = 'deleted';
           widget.product.price = 0.0;
           widget.product.quantity = 0;
-          widget.product.minecraftTag = 'deleted';
-          widget.product.avatarUrl = ''; // Clear avatar URL
+          // widget.product.marketItem.minecraftTag = 'deleted';
+          // widget.product.marketItem.avatarUrl = ''; // Clear avatar URL
         });
       }
     } catch (e) {

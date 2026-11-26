@@ -48,7 +48,7 @@ class CompanyOrderDetailsDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image: NetworkImage(
-                        product?.avatarUrl ??
+                        product?.marketItem.avatarUrl ??
                             'https://placehold.co/70x70?text=No+Image',
                       ),
                       fit: BoxFit.cover,
@@ -160,7 +160,7 @@ class CompanyOrderDetailsDialog extends StatelessWidget {
                 const Divider(),
                 _buildDetailRow(
                   'Minecraft Tag',
-                  product?.minecraftTag ?? 'N/A',
+                  product?.marketItem.minecraftTag ?? 'N/A',
                 ),
                 _buildDetailRow(
                   'Price Per Unit',

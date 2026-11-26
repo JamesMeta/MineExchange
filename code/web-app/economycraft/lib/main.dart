@@ -18,7 +18,7 @@ import 'package:economycraft/screens/player_overview/player_overview_screen.dart
 import 'package:economycraft/screens/order/order_selection_screen.dart';
 import 'package:economycraft/screens/order/company/order_company_screen.dart';
 import 'package:economycraft/screens/order/user/order_user_screen.dart';
-import 'package:economycraft/screens/market_screen.dart';
+import 'package:economycraft/screens/market/market_screen.dart';
 import 'package:economycraft/screens/player_profile_screen.dart';
 import 'package:economycraft/screens/company/company_page_screen.dart';
 import 'package:economycraft/screens/shopping_cart/shopping_cart_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:economycraft/classes/modals/inventory.dart';
+import 'package:economycraft/classes/modals/inventory_item.dart';
 import 'package:economycraft/classes/modals/market_item.dart';
 import 'package:economycraft/common_widgets/base_screen_widget.dart';
 import 'package:economycraft/common_widgets/screen_central_body.dart';
@@ -16,7 +16,7 @@ class ViewInventoryScreen extends StatefulWidget {
 }
 
 class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
-  late Future<List<Inventory>?> _inventoryItems;
+  late Future<List<InventoryItem>?> _inventoryItems;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
@@ -143,7 +143,7 @@ class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
   // ── Inventory Grid ────────────────────────────────────────────────────────
 
   Widget _buildInventoryGrid() {
-    return FutureBuilder<List<Inventory>?>(
+    return FutureBuilder<List<InventoryItem>?>(
       future: _inventoryItems,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -165,7 +165,7 @@ class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
     );
   }
 
-  Widget _buildGridView(List<Inventory> items) {
+  Widget _buildGridView(List<InventoryItem> items) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: GridView.builder(
@@ -288,7 +288,7 @@ class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
     });
   }
 
-  List<Inventory> _filterItems(List<Inventory> items) {
+  List<InventoryItem> _filterItems(List<InventoryItem> items) {
     if (_searchQuery.isEmpty) return items;
     return items
         .where(
@@ -297,7 +297,7 @@ class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
         .toList();
   }
 
-  void _showItemDialog(Inventory item) {
+  void _showItemDialog(InventoryItem item) {
     showDialog(
       context: context,
       builder: (context) => InventoryItemDialogWidget(inventoryItem: item),
@@ -316,7 +316,7 @@ class _ViewInventoryScreenState extends State<ViewInventoryScreen> {
     });
   }
 
-  Future<List<Inventory>?> _fetchInventoryItems() {
+  Future<List<InventoryItem>?> _fetchInventoryItems() {
     return SupabaseHelper.inventory.getUserInventory();
   }
 }

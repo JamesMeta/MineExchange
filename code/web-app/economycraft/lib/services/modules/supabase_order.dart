@@ -1,4 +1,6 @@
 import 'package:economycraft/classes/modals/company.dart';
+import 'package:economycraft/classes/modals/market_item.dart';
+import 'package:economycraft/classes/modals/player.dart';
 import 'package:economycraft/classes/modals/product.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:developer' as developer;
@@ -65,6 +67,8 @@ class SupabaseOrder {
     return a * (log(k * (x - h)) / log(b)) + c;
   }
 
+  //TODO
+  // Migrate the following method to not effect reputation anymore
   Future<bool> cancelOrderOwner(Order order) async {
     final user = _client.auth.currentUser;
     if (user == null) {
@@ -113,9 +117,22 @@ class SupabaseOrder {
       final response = await _client
           .from('orders')
           .select('''
-            *,
-            companies:company_id(id, created_at, name, reputation, avatar_url, evaluation, slogan, is_public, user_id, verified, lot_number),
-            products:product_id(id, created_at, company_id, name, description, avatar_url, price, quantity, value, niche_coefficient, verified, minecraft_tag)"''')
+      *,
+      companies:company_id(id, created_at, name, reputation, avatar_url, evaluation, slogan, is_public, user_id, verified, lot_number),
+      products:product_id(
+        id,
+        created_at,
+        company_id,
+        market_item_id,
+        name,
+        description,
+        price,
+        quantity,
+        valid_market_items:market_item_id(*)
+        users:user_id(*)
+        is_sell
+      )
+    ''')
           .eq('user_id', userRowId)
           .order('created_at', ascending: false);
       if (response.isEmpty) {
@@ -145,10 +162,10 @@ class SupabaseOrder {
                 description: product['description'],
                 price: product['price'],
                 quantity: product['quantity'],
-                avatarUrl: product['avatar_url'],
-                companyId: product['company_id'],
-                minecraftTag: product['minecraft_tag'],
-                createdAt: DateTime.parse(product['created_at']),
+                marketItem: MarketItem.fromMap(product['valid_market_items']),
+                createdAt: product['created_at'],
+                player: Player.fromMap(product['users']),
+                isSell: product['is_sell'] ?? false,
               ),
               company: Company(
                 id: company['id'],
@@ -179,7 +196,19 @@ class SupabaseOrder {
           .select('''
             *,
             companies:company_id(id, created_at, name, reputation, avatar_url, evaluation, slogan, is_public, user_id, verified, lot_number),
-            products:product_id(id, created_at, company_id, name, description, avatar_url, price, quantity, value, niche_coefficient, verified, minecraft_tag)"''')
+            products:product_id(
+              id,
+              created_at,
+              company_id,
+              market_item_id,
+              name,
+              description,
+              price,
+              quantity,
+              valid_market_items:market_item_id(*)
+              users:user_id(*)
+              is_sell
+            )''')
           .eq('company_id', companyId)
           .order('created_at', ascending: false);
       if (response.isEmpty) {
@@ -208,10 +237,10 @@ class SupabaseOrder {
                 description: product['description'],
                 price: product['price'],
                 quantity: product['quantity'],
-                avatarUrl: product['avatar_url'],
-                companyId: product['company_id'],
-                minecraftTag: product['minecraft_tag'],
-                createdAt: DateTime.parse(product['created_at']),
+                marketItem: MarketItem.fromMap(product['valid_market_items']),
+                createdAt: product['created_at'],
+                player: Player.fromMap(product['users']),
+                isSell: product['is_sell'] ?? false,
               ),
               company: Company(
                 id: company['id'],
